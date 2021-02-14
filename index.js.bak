@@ -1,0 +1,13 @@
+var express = require('express');
+var app = express();
+
+// GET method route
+app.get('/departements', function (req, res) {
+  res.send(departementdao.getAll());
+});
+
+// POST method route
+app.post('/new', function (req, res) {
+	const body = req.body
+	res.send('POST request to the homepage');
+});

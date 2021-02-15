@@ -1,9 +1,10 @@
-import { CompanyDAO, Company } from './dao/company.js'
+import {CompanyDAO} from './dao/company.mjs'
+import {DB} from './db/db.mjs'
 
-const DAO = new Company("hhhh","pppp",12,"4");
-
-
-console.log(DAO.toString())
+const DAO = new CompanyDAO();
+const db = new DB();
+DB.open()
+DAO.getAll(db.db)
 
 /*
 const r1 = await DAO.get(1);

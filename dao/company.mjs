@@ -1,4 +1,4 @@
-import {DAO} from './dao.js'
+import {DAO} from './dao.mjs'
 
 class Company {
 
@@ -35,7 +35,12 @@ class CompanyDAO extends DAO {
   async get(dptId) {
   }
 
-  async getAll() {
+  async getAll(db) {
+    db.db('companies').collection("startup_log").find({}).toArray(function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      db_ref.close();
+    });
   }
 
   async update (dpt) {

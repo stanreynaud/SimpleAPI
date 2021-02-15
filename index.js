@@ -1,5 +1,4 @@
-const app = require("./app");
-const appMonitoring = require("./app-monitoring");
+const app = require("./api");
 
 // This file launches the server
 

@@ -4,4 +4,4 @@ class DAO {
   }
 
   
-export { DAO }
+module.exports = DAO

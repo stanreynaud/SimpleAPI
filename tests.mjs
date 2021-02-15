@@ -2,9 +2,9 @@ import {CompanyDAO} from './dao/company.mjs'
 import {DB} from './db/db.mjs'
 
 const DAO = new CompanyDAO();
-const db = new DB();
-DB.open()
-DAO.getAll(db.db)
+await DB.open()
+//console.log(DB.client)
+DAO.getAll(DB.client)
 
 /*
 const r1 = await DAO.get(1);

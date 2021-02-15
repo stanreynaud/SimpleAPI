@@ -1,4 +1,4 @@
-import {DAO} from './dao.mjs'
+const DAO = require('./dao.js')
 
 class Company {
 
@@ -35,12 +35,14 @@ class CompanyDAO extends DAO {
   async get(dptId) {
   }
 
-  async getAll(db) {
-    db.db('companies').collection("startup_log").find({}).toArray(function(err, result) {
-      if (err) throw err;
-      console.log(result);
-      db_ref.close();
-    });
+  async getAll(database) {
+    database.collection('startup_log').find({}).toArray(function(err, docs) {
+      if (err) {
+          console.log(err)
+          throw err
+      }
+      return docs
+    })
   }
 
   async update (dpt) {
@@ -50,4 +52,4 @@ class CompanyDAO extends DAO {
   }
 }
 
-export { Company, CompanyDAO }
+module.exports = {Company, CompanyDAO}

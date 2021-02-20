@@ -15,7 +15,6 @@ app.use(express.json())
 
 app.get('/companies', async (req,res) => {
     res.status(200).json(await DAO.getAll(DB.db))
-    console.log(await DAO.getAll(DB.db))
 })
 
 app.get("/products", (req, res) => {

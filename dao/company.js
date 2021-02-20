@@ -36,13 +36,12 @@ class CompanyDAO extends DAO {
   }
 
   async getAll(database) {
-    database.collection('startup_log').find({}).toArray(function(err, docs) {
-      if (err) {
-          console.log(err)
-          throw err
-      }
-      return docs
-    })
+    try {
+      return await database.collection('startup_log').find().toArray()
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
   }
 
   async update (dpt) {

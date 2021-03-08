@@ -29,7 +29,21 @@ class CompanyDAO extends DAO {
     super()
   }
 
-  async create(company) {
+  async create(database,company) {
+    console.log(company)
+    try {
+      return await database.collection('companies').insertOne(
+        {
+          company : company.company,
+          description : company.description,
+          initial_price : company.initial_price,
+          symbol : company.symbol
+        }
+      )
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
   }
 
   async get(dptId) {
@@ -37,7 +51,15 @@ class CompanyDAO extends DAO {
 
   async getAll(database) {
     try {
-      return await database.collection('startup_log').find().toArray()
+      return await database.collection('companies').aggregate([{
+        $lookup:
+          {
+            from: "products",
+            localField: "symbol",
+            foreignField: "company_symbol",
+            as: "product"
+          }
+      }]).toArray()
     } catch (err) {
         console.log(err)
         throw err

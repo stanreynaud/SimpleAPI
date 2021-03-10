@@ -1,5 +1,6 @@
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
+const jwt = require("jsonwebtoken")
 const DB = require('./db/db.js')
 const {Company, CompanyDAO} = require('./dao/company.js')
 
@@ -11,7 +12,7 @@ DB.open()
 
 app.use(express.json())
 
-app.get('/companies', async (req,res) => {
+app.get('/companies', authenticateToken, async (req,res) => {
     try {
         res.json(await DAO.getAll(DB.db))
     }
@@ -98,11 +99,32 @@ app.patch('/companies/:symbol', async (req, res) => {
         }
     }
 })
+app.get("/login", (req, res) => {
+    const token = generateAccessToken()
+    res.json(token)
+});
 
 
 app.get("/products", (req, res) => {
     res.json();
 });
+
+function generateAccessToken() {
+    return jwt.sign({data: 'foobar'}, "secret", { expiresIn: '120s' });
+  }
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.status(401).send()
+  
+    jwt.verify(token, "secret", (err,user) => {
+      console.log(err)
+      if (err) return res.status(403).send()
+      req.user = user
+      next()
+    })
+  }
 
 
 module.exports = app;

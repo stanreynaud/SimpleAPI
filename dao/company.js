@@ -47,9 +47,20 @@ class CompanyDAO extends DAO {
 
   async get(database,symbol) {
     try {
-      return await database.collection('companies').find({
-        symbol : { $eq : symbol}
-      }).toArray()
+      return await database.collection('companies').aggregate([
+      {
+        $lookup:
+          {
+            from: "products",
+            localField: "symbol",
+            foreignField: "company_symbol",
+            as: "products"
+          }
+      },
+      {
+        $match : { symbol : symbol }
+      }
+    ]).toArray()
     } catch (err) {
         console.log(err)
         throw err
@@ -64,7 +75,7 @@ class CompanyDAO extends DAO {
             from: "products",
             localField: "symbol",
             foreignField: "company_symbol",
-            as: "product"
+            as: "products"
           }
       }]).toArray()
     } catch (err) {
@@ -73,7 +84,23 @@ class CompanyDAO extends DAO {
     }
   }
 
-  async update (dpt) {
+  async update (database,symbol,company) {
+    try {
+      return await database.collection('companies').update(
+        {symbol : symbol},
+        {
+          $set: {
+            company : company.company,
+            description : company.description,
+            initial_price : company.initial_price,
+            symbol : company.symbol
+          }
+        }
+      )
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
   }
 
   async delete (database,symbol) {

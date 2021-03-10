@@ -30,7 +30,6 @@ class CompanyDAO extends DAO {
   }
 
   async create(database,company) {
-    console.log(company)
     try {
       return await database.collection('companies').insertOne(
         {
@@ -46,7 +45,15 @@ class CompanyDAO extends DAO {
     }
   }
 
-  async get(dptId) {
+  async get(database,symbol) {
+    try {
+      return await database.collection('companies').find({
+        symbol : { $eq : symbol}
+      }).toArray()
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
   }
 
   async getAll(database) {
@@ -69,7 +76,15 @@ class CompanyDAO extends DAO {
   async update (dpt) {
   }
 
-  async delete (dpt) {
+  async delete (database,symbol) {
+    try {
+      return await database.collection('companies').deleteOne({
+        symbol : { $eq : symbol}
+      })
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
   }
 }
 

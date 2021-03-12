@@ -8,20 +8,6 @@ class Company {
     this.initial_price = initial_price
     this.symbol = symbol
   }
-
-  setCompany (company) { this.company = company }
-  getCompany () { return this.company }
-
-  setDescription (description) { this.description = description }
-  getDescription () { return this.namdescriptione }
-
-  setInitial_price (initial_price) { this.initial_price = initial_price }
-  getInitial_price () { return this.initial_price }
-
-  setSymbol (symbol) { this.symbol = symbol }
-  getSymbol () { return this.symbol }
-
-  toString () { return this.company+" "+this.description+" "+this.initial_price+" "+this.symbol }
 }
 
 class CompanyDAO extends DAO {
@@ -86,7 +72,7 @@ class CompanyDAO extends DAO {
 
   async update (database,symbol,company) {
     try {
-      return await database.collection('companies').update(
+      return await database.collection('companies').updateOne(
         {symbol : symbol},
         {
           $set: {

@@ -13,6 +13,7 @@ class DB {
             console.log("Connected successfully to server");
             DB.db = client.db(dbName);
         });
+        return
     }
   }
 

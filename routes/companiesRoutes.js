@@ -1,4 +1,5 @@
 const {Company, CompanyDAO} = require('../dao/company.js')
+const {authenticateToken} = require('../lib/authentication/authenticationFunctions')
 
 // This file contains API endpoints declarations for the companies collection
 
@@ -6,7 +7,7 @@ const DAO = new CompanyDAO()
 
 module.exports = function(app,DB){
 
-    app.get('/companies', async (req,res) => {
+    app.get('/companies', authenticateToken, async (req,res) => {
         try {
             res.json(await DAO.getAll(DB.db))
         }
@@ -15,7 +16,7 @@ module.exports = function(app,DB){
             res.status(500).json(err)
         }
     })
-    app.get('/companies/:symbol', async (req,res) => {
+    app.get('/companies/:symbol', authenticateToken, async (req,res) => {
         try {
             let result = await DAO.get(DB.db,req.params.symbol)
             if (result.length == 0) {
@@ -28,7 +29,7 @@ module.exports = function(app,DB){
             res.status(500).json(err)
         }
     })
-    app.post('/companies', (req, res) => {
+    app.post('/companies', authenticateToken, async (req, res) => {
         const name = req.query.company
         const description =  req.query.description
         const initial_price = req.query.initial_price
@@ -42,7 +43,7 @@ module.exports = function(app,DB){
         } else {
             try {
                 let company = new Company(name,description,initial_price,symbol)
-                DAO.create(DB.db,company)
+                await DAO.create(DB.db,company)
                 res.status(201).json(company)
             }
             catch(err) {
@@ -50,7 +51,7 @@ module.exports = function(app,DB){
             }
         }
     })
-    app.delete('/companies/:symbol', async (req,res) => {
+    app.delete('/companies/:symbol', authenticateToken, async (req,res) => {
         try {
             let result = await DAO.get(DB.db,req.params.symbol)
             if (result.length == 0) {
@@ -65,7 +66,7 @@ module.exports = function(app,DB){
             res.status(500).json(err)
         }
     })
-    app.patch('/companies/:symbol', async (req, res) => {
+    app.patch('/companies/:symbol', authenticateToken, async (req, res) => {
         const name = req.query.company
         const description =  req.query.description
         const initial_price = req.query.initial_price

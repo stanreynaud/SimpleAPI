@@ -1,0 +1,4 @@
+site_name: Client-server project
+nav:
+    - Home: index.md
+    - Routes: routes.md

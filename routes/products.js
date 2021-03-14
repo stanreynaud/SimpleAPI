@@ -65,9 +65,9 @@ module.exports = function(app,DB){
         }
     })
     app.patch('/products/:name', authenticateToken, async (req, res) => {
-        const name = req.body.name
-        const price = req.body.price
-        const company_symbol = req.body.company_symbol
+        let name = req.body.name
+        let price = req.body.price
+        let company_symbol = req.body.company_symbol
 
         let result = await DAO.get(DB.db,req.params.name)
 
@@ -80,6 +80,9 @@ module.exports = function(app,DB){
                 if (result.length == 0) {
                     res.status(404).send()
                 } else {
+                    name = (typeof name == 'undefined')?result[0].name:req.body.name
+                    price = (typeof price == 'undefined')?result[0].price:req.body.price
+                    company_symbol = (typeof company_symbol == 'undefined')?result[0].company_symbol:req.body.company_symbol
                     let product = new Product(name,price,company_symbol)
                     const updateResult = await DAO.update(DB.db,req.params.name,product)
                     result.push(updateResult)

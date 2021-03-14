@@ -67,10 +67,10 @@ module.exports = function(app,DB){
         }
     })
     app.patch('/companies/:symbol', authenticateToken, async (req, res) => {
-        const name = req.body.company
-        const description =  req.body.description
-        const initial_price = req.body.initial_price
-        const symbol = req.body.symbol
+        let name = req.body.company
+        let description =  req.body.description
+        let initial_price = req.body.initial_price
+        let symbol = req.body.symbol
 
         let result = await DAO.get(DB.db,req.params.symbol)
 
@@ -84,6 +84,10 @@ module.exports = function(app,DB){
                 if (result.length == 0) {
                     res.status(404).send()
                 } else {
+                    name = (typeof name == 'undefined')?result[0].name:req.body.company
+                    description = (typeof description == 'undefined')?result[0].description:req.body.description
+                    initial_price = (typeof initial_price == 'undefined')?result[0].initial_price:req.body.initial_price
+                    symbol = (typeof symbol == 'undefined')?result[0].symbol:req.body.symbol
                     let company = new Company(name,description,initial_price,symbol)
                     const updateResult = await DAO.update(DB.db,req.params.symbol,company)
                     result.push(updateResult)

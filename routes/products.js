@@ -30,9 +30,9 @@ module.exports = function(app,DB){
         }
     })
     app.post('/products', authenticateToken, async (req, res) => {
-        const name = req.query.name
-        const price = req.query.price
-        const company_symbol = req.query.company_symbol
+        const name = req.body.name
+        const price = req.body.price
+        const company_symbol = req.body.company_symbol
 
         if (typeof name == 'undefined' &&
         typeof price == 'undefined' &&
@@ -65,9 +65,9 @@ module.exports = function(app,DB){
         }
     })
     app.patch('/products/:name', authenticateToken, async (req, res) => {
-        const name = req.query.name
-        const price = req.query.price
-        const company_symbol = req.query.company_symbol
+        const name = req.body.name
+        const price = req.body.price
+        const company_symbol = req.body.company_symbol
 
         let result = await DAO.get(DB.db,req.params.name)
 

@@ -8,7 +8,7 @@ module.exports = function(app){
     app.post("/login", (req, res) => {
         try {
             const user = {user : req.params.username}
-            const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{ expiresIn: 30 })
+            const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{ expiresIn: 60 })
             res.json({accessToken : accessToken})
         }
         catch(err) {

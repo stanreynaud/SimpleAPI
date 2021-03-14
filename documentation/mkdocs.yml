@@ -1,4 +1,6 @@
 site_name: Client-server project
 nav:
     - Home: index.md
+    - Base de données: db.md
+    - Authentification: auth.md
     - Routes: routes.md

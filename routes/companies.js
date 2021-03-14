@@ -30,10 +30,10 @@ module.exports = function(app,DB){
         }
     })
     app.post('/companies', authenticateToken, async (req, res) => {
-        const name = req.query.company
-        const description =  req.query.description
-        const initial_price = req.query.initial_price
-        const symbol = req.query.symbol
+        const name = req.body.company
+        const description =  req.body.description
+        const initial_price = req.body.initial_price
+        const symbol = req.body.symbol
 
         if (typeof name == 'undefined' &&
         typeof description == 'undefined' &&
@@ -67,10 +67,10 @@ module.exports = function(app,DB){
         }
     })
     app.patch('/companies/:symbol', authenticateToken, async (req, res) => {
-        const name = req.query.company
-        const description =  req.query.description
-        const initial_price = req.query.initial_price
-        const symbol = req.query.symbol
+        const name = req.body.company
+        const description =  req.body.description
+        const initial_price = req.body.initial_price
+        const symbol = req.body.symbol
 
         let result = await DAO.get(DB.db,req.params.symbol)
 
@@ -95,5 +95,4 @@ module.exports = function(app,DB){
             }
         }
     })
-
 }

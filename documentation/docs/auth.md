@@ -1,6 +1,6 @@
 # Authentification
 
-Pour s'authentifier, l'utilisateur doit fournir son username via un POST à /login pour récupérer un token valide pendant 60 secondes.
+Pour s'authentifier, l'utilisateur doit fournir son username dans le body d'un POST sur /login pour récupérer un token valide pendant 60 secondes.
 
 Exemple :   
 POST 'http://localhost:5000/login'  

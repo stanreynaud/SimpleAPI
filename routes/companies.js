@@ -84,7 +84,7 @@ module.exports = function(app,DB){
                 if (result.length == 0) {
                     res.status(404).send()
                 } else {
-                    name = (typeof name == 'undefined')?result[0].name:req.body.company
+                    name = (typeof name == 'undefined')?result[0].company:req.body.company
                     description = (typeof description == 'undefined')?result[0].description:req.body.description
                     initial_price = (typeof initial_price == 'undefined')?result[0].initial_price:req.body.initial_price
                     symbol = (typeof symbol == 'undefined')?result[0].symbol:req.body.symbol

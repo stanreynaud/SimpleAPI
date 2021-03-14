@@ -3,3 +3,13 @@
     "price": 40,
     "company_symbol": "DOW"
 }
+{
+    "name": "calculators",
+    "price": 10,
+    "company_symbol": "TXN"
+}
+{
+    "name": "plastic",
+    "price": 2,
+    "company_symbol": "DOW"
+}

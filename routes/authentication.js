@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken")
 require('dotenv').config()
 
+// This file contains the login endpoint which provides a bearer token to a user
+
 module.exports = function(app){
 
     app.post("/login", (req, res) => {

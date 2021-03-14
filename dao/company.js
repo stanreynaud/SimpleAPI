@@ -1,7 +1,8 @@
 const DAO = require('./dao.js')
 
-class Company {
+// This file declares the company object and the company DAO
 
+class Company {
   constructor (company, description, initial_price,symbol) {
     this.company = company
     this.description = description

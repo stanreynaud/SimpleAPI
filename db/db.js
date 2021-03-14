@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
+// This class handles the database connection
 class DB {
     static db = null;
   

@@ -1,5 +1,7 @@
 const DAO = require('./dao.js')
 
+// This file declares the product object and the product DAO
+
 class Product {
     constructor (name, price, company_symbol) {
       this.name = name
